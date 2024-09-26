@@ -10,6 +10,13 @@ public class Gasto {
 	private String descricao;
 	private Categoria categoria;
 	
+	public Gasto(String nome, LocalDate data, String descricao, float valor, Categoria categoria) {
+		setCategoria(categoria);
+		setData(data);
+		setDescricao(descricao);
+		setNome(nome);
+		setValor(valor);
+	}
 	
 	public LocalDate getData() {
 		return data;
