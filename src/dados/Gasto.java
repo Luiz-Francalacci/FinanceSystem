@@ -1,0 +1,57 @@
+package dados;
+
+import java.time.LocalDate;
+
+public class Gasto {
+
+	private String nome;
+	private LocalDate data;
+	private float valor;
+	private String descricao;
+	private Categoria categoria;
+	
+	
+	public LocalDate getData() {
+		return data;
+	}
+	public void setData(LocalDate data) {
+		this.data = data;
+	}
+	public float getValor() {
+		return valor;
+	}
+	public void setValor(float valor) {
+		this.valor = valor;
+	}
+	public String getDescricao() {
+		return descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	public Categoria getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+	
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	public String toString() {
+		return String.format("Nome: %s \nData: %s \nDescrição: %s \nValor: R$%.2f \n Categoria: %s",this.nome, this.data, this.descricao,
+							this.valor, this.categoria);
+	}
+	
+	
+	
+	
+	
+	
+	
+}
