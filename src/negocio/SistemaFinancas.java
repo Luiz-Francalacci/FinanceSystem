@@ -8,7 +8,7 @@ import dados.Gasto;
 import dados.Usuario;
 
 
-public class ControleGastos {
+public class SistemaFinancas {
 
 	private List<Usuario> usuarios = new ArrayList<>();
 	

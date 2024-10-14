@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import negocio.ControleGastos;
+import negocio.SistemaFinancas;
 
 public class testes {
 
@@ -13,7 +13,7 @@ public class testes {
 		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		Usuario usuario = new Usuario("Luiz", "1234");
 		
-		ControleGastos sistema = new ControleGastos();
+		SistemaFinancas sistema = new SistemaFinancas();
 		sistema.cadastrarUsuario(usuario);
 		sistema.logarUsuario("Luiz", "1234");
 		
