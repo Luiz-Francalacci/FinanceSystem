@@ -1,6 +1,7 @@
 package dados;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Gasto {
 
@@ -51,7 +52,8 @@ public class Gasto {
 	}
 	
 	public String toString() {
-		return String.format("Nome: %s \nData: %s \nDescrição: %s \nValor: R$%.2f \n Categoria: %s",this.nome, this.data, this.descricao,
+		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return String.format("Nome: %s \nData: %s \nDescrição: %s \nValor: R$%.2f \nCategoria: %s",this.nome, this.data.format(formato), this.descricao,
 							this.valor, this.categoria);
 	}
 	

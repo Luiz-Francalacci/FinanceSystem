@@ -17,7 +17,7 @@ public class Usuario {
 	}
 	
 	public boolean validarLogin(String login, String senha) {
-		if(this.login == login && this.senha == senha) {
+		if(this.login.equals(login) && this.senha.equals(senha)) {
 			return true;
 		}
 		return false;
@@ -28,29 +28,29 @@ public class Usuario {
 	}
 	
 	public void removerGasto(String nome) {
-		for(Gasto x : gastos) {
-			if(x.getNome() == nome) {
-				gastos.remove(x);
+		for(int i =0; i < this.gastos.size(); i++) {
+			if(this.gastos.get(i).getNome().equals(nome)) {
+				gastos.remove(i);
 			}
 		}
 	}
 	
 	public void alterarGasto(String nome, String opcao, String resposta) {
 		for(Gasto x : gastos) {
-			if(x.getNome() == nome) {
-				if(opcao.toLowerCase() == "nome") {
+			if(x.getNome().equals(nome)) {
+				if(opcao.toLowerCase().equals("nome")) {
 					x.setNome(resposta);
 				}
-				if(opcao.toLowerCase() == "valor") {
+				if(opcao.toLowerCase().equals("valor")) {
 					x.setValor(Float.parseFloat(resposta));
 				}
-				if(opcao.toLowerCase() == "data") {
+				if(opcao.toLowerCase().equals("data")) {
 					x.setData(LocalDate.parse(resposta));
 				}
-				if(opcao.toLowerCase() == "categoria") {
+				if(opcao.toLowerCase().equals("categoria")) {
 					x.setCategoria(Categoria.valueOf(resposta.toUpperCase()));
 				}
-				if(opcao.toLowerCase() == "descricao") {
+				if(opcao.toLowerCase().equals("descricao")) {
 					x.setDescricao(resposta);
 				}
 			}
