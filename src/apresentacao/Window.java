@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -25,34 +26,58 @@ public class Window extends JFrame{
 		return this.sistema;
 	}
 	
+	private JPanel panel = new JPanel();
+	private JPanel painelAddGasto = new JPanel();
+	private JLabel infoNome = new JLabel("Nome:");
+	private JTextField nome = new JTextField();
+	private JLabel infoData = new JLabel("Data:");
+	private JTextField data = new JTextField();
+	private JLabel infoValor = new JLabel("Valor:");
+	private JTextField valor = new JTextField();
+	private JLabel infoCategoria = new JLabel("Categoria:");
+	private JTextField categoria = new JTextField();
+	private JLabel infoDescricao = new JLabel("Descricao:");
+	private JTextField descricao = new JTextField();
+	private JButton addGasto = new JButton("Add");
+	
+	
 	public Window() {
-		this.setTitle("Sistema de Financa Pessoais");
 		
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setSize(1200,800);
-		this.setLocationRelativeTo(null);
-		this.setResizable(false);
+		setTitle("Sistema de Financas Pessoais");
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setBounds(100,100,1000,800);
+		setContentPane(panel);
+		panel.setLayout(null);
+		painelAddGasto.setBounds(10,10, 390, 750);
+		painelAddGasto.setBackground(Color.gray);
+		painelAddGasto.setLayout(null);
+		panel.add(painelAddGasto);
+		infoNome.setBounds(30, 30, 50, 15);
+		painelAddGasto.add(infoNome);
+		nome.setBounds(30, 50, 200, 30);
+		painelAddGasto.add(nome);
 		
-		JPanel gasto = new JPanel();
-		gasto.setBackground(Color.gray);
-		this.add(gasto);
+		infoData.setBounds(30, 90, 50, 15); //60
+		painelAddGasto.add(infoData);
+		data.setBounds(30, 110, 200, 30);
+		painelAddGasto.add(data);
 		
-		JTextField nome = new JTextField();
-		nome.setText("nome");
+		infoValor.setBounds(30,150,50,15);
+		painelAddGasto.add(infoValor);
+		valor.setBounds(30,170, 200,30);
+		painelAddGasto.add(valor);
 		
-		JTextField data = new JTextField();
-		data.setText("data");
+		infoCategoria.setBounds(30,210, 70, 15);
+		painelAddGasto.add(infoCategoria);
+		categoria.setBounds(30, 230, 200, 30);
+		painelAddGasto.add(categoria);
 		
-		JTextField valor = new JTextField();
-		valor.setText("valor");
+		infoDescricao.setBounds(30, 270, 70, 15);
+		painelAddGasto.add(infoDescricao);
+		descricao.setBounds(30, 290, 200, 30);
+		painelAddGasto.add(descricao);
 		
-		JTextField categoria = new JTextField();
-		categoria.setText("Categoria");
-		
-		JTextArea descricao = new JTextArea();
-		descricao.setText("descricao");
-		
-		JButton addGasto = new JButton("Adicionar");
+		addGasto.setBounds(30, 350, 200, 40);
 		addGasto.addActionListener(new ActionListener() {
 			@Override
 			 
@@ -61,25 +86,18 @@ public class Window extends JFrame{
 				sistema.adicionarGasto(new Gasto(nome.getText(), LocalDate.parse(data.getText(), formato),
 						descricao.getText(), Float.parseFloat(valor.getText()),
 						Categoria.valueOf(categoria.getText().toUpperCase())));
-				nome.setText("nome");
-				data.setText("data");
-				valor.setText("valor");
-				categoria.setText("Categoria");
-				descricao.setText("descricao");
-				
-				
+				nome.setText("");
+				data.setText("");
+				valor.setText("");
+				categoria.setText("");
+				descricao.setText("");
 			}
 		});
-		
-		gasto.add(nome);
-		gasto.add(data);
-		gasto.add(valor);
-		gasto.add(categoria);
-		gasto.add(descricao);
-		gasto.add(addGasto);
+		painelAddGasto.add(addGasto);
 		
 		
 		
+			
 		
 		
 		
