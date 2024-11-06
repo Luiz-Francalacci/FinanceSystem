@@ -9,6 +9,6 @@ public enum Categoria {
 	TRANSPORTE,
 	OUTROS;
 	
-	
+
 	
 }
