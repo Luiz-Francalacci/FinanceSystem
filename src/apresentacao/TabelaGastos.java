@@ -1,5 +1,6 @@
 package apresentacao;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -47,7 +48,8 @@ public class TabelaGastos extends AbstractTableModel{
 				case 0:
 					return g.getNome();
 				case 1:
-					return g.getData();
+					DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+					return g.getData().format(formato);
 				case 2:
 					return g.getValor();
 				case 3:

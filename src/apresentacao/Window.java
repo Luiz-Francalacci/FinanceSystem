@@ -45,9 +45,10 @@ public class Window extends JFrame{
 	private JTable tabelaGastos;
 	private TabelaGastos tabela = new TabelaGastos();
 	private JButton filtrarData = new JButton("Filtrar Data");
-	private JButton filtrarCategoria = new JButton("Filtrar Data");
+	private JButton filtrarCategoria = new JButton("Filtrar Ctgr");
 	private JTextField filtro = new JTextField();
 	private JLabel infoFiltro = new JLabel("Filtros:");
+	private JButton limpar = new JButton("Limpar Filtros");
 	
 	
 	public Window() {
@@ -95,7 +96,6 @@ public class Window extends JFrame{
 		painelTabelaValores.setViewportView(tabelaGastos);
 		addGasto.addActionListener(new ActionListener() {
 			@Override
-			 
 			public void actionPerformed(ActionEvent e) {
 				DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 				sistema.adicionarGasto(new Gasto(nome.getText(), LocalDate.parse(data.getText(), formato),
@@ -121,6 +121,47 @@ public class Window extends JFrame{
 		painelAddGasto.add(filtrarData);
 		filtrarCategoria.setBounds(130, 490,100,40);
 		painelAddGasto.add(filtrarCategoria);
+		
+		filtrarData.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String data[] = filtro.getText().split("/");
+				tabela.setGasto(sistema.filtrarMes(Integer.parseInt(data[0]), 
+						Integer.parseInt(data[1])));
+				tabela.atualiza();
+				filtro.setText("");
+				
+			}
+		});
+		
+		filtrarCategoria.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String categoria = filtro.getText();
+				tabela.setGasto(sistema.filtrarCategoria(Categoria.valueOf(categoria.toUpperCase())));
+				tabela.atualiza();
+				filtro.setText("");
+				
+			}
+		});
+		
+		limpar.setBounds(30, 550, 200, 40);
+		painelAddGasto.add(limpar);
+		
+		limpar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tabela.setGasto(sistema.getGastos());
+				tabela.atualiza();
+				
+			}
+		});
+		
+		
+		
 		
 		
 		
