@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -39,6 +41,13 @@ public class Window extends JFrame{
 	private JLabel infoDescricao = new JLabel("Descricao:");
 	private JTextField descricao = new JTextField();
 	private JButton addGasto = new JButton("Add");
+	private JScrollPane painelTabelaValores = new JScrollPane();
+	private JTable tabelaGastos;
+	private TabelaGastos tabela = new TabelaGastos();
+	private JButton filtrarData = new JButton("Filtrar Data");
+	private JButton filtrarCategoria = new JButton("Filtrar Data");
+	private JTextField filtro = new JTextField();
+	private JLabel infoFiltro = new JLabel("Filtros:");
 	
 	
 	public Window() {
@@ -78,6 +87,12 @@ public class Window extends JFrame{
 		painelAddGasto.add(descricao);
 		
 		addGasto.setBounds(30, 350, 200, 40);
+		painelAddGasto.add(addGasto);
+		
+		painelTabelaValores.setBounds(450,10,500,400);
+		panel.add(painelTabelaValores);
+		tabelaGastos = new JTable(tabela);
+		painelTabelaValores.setViewportView(tabelaGastos);
 		addGasto.addActionListener(new ActionListener() {
 			@Override
 			 
@@ -86,18 +101,28 @@ public class Window extends JFrame{
 				sistema.adicionarGasto(new Gasto(nome.getText(), LocalDate.parse(data.getText(), formato),
 						descricao.getText(), Float.parseFloat(valor.getText()),
 						Categoria.valueOf(categoria.getText().toUpperCase())));
+				tabela.setGasto(sistema.getGastos());
+				tabela.atualiza();
+				
 				nome.setText("");
 				data.setText("");
 				valor.setText("");
 				categoria.setText("");
 				descricao.setText("");
+				
 			}
 		});
-		painelAddGasto.add(addGasto);
+		
+		infoFiltro.setBounds(30,430 , 70, 15);
+		painelAddGasto.add(infoFiltro);
+		filtro.setBounds(30,450,200,30);
+		painelAddGasto.add(filtro);
+		filtrarData.setBounds(30, 490,100,40);
+		painelAddGasto.add(filtrarData);
+		filtrarCategoria.setBounds(130, 490,100,40);
+		painelAddGasto.add(filtrarCategoria);
 		
 		
-		
-			
 		
 		
 		
