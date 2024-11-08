@@ -56,6 +56,13 @@ public class SistemaFinancas {
 		this.usuarios.get(usuarioOn).alterarGasto(nome, opcao, resposta);
 	}
 	
+	public float getTotal(List<Gasto> gastos) {
+		float total = 0;
+		for(Gasto x : gastos) {
+			total += x.getValor();
+		}
+		return total;
+	}
 	
 	
 	

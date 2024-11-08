@@ -49,6 +49,7 @@ public class Window extends JFrame{
 	private JTextField filtro = new JTextField();
 	private JLabel infoFiltro = new JLabel("Filtros:");
 	private JButton limpar = new JButton("Limpar Filtros");
+	private JLabel total = new JLabel("Total: 0");
 	
 	
 	public Window() {
@@ -103,6 +104,7 @@ public class Window extends JFrame{
 						Categoria.valueOf(categoria.getText().toUpperCase())));
 				tabela.setGasto(sistema.getGastos());
 				tabela.atualiza();
+				total.setText("Total: " + sistema.getTotal(sistema.getGastos()));
 				
 				nome.setText("");
 				data.setText("");
@@ -129,6 +131,8 @@ public class Window extends JFrame{
 				String data[] = filtro.getText().split("/");
 				tabela.setGasto(sistema.filtrarMes(Integer.parseInt(data[0]), 
 						Integer.parseInt(data[1])));
+				total.setText("Total: " + sistema.getTotal(sistema.filtrarMes(Integer.parseInt(data[0]), 
+						Integer.parseInt(data[1]))));
 				tabela.atualiza();
 				filtro.setText("");
 				
@@ -141,6 +145,7 @@ public class Window extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				String categoria = filtro.getText();
 				tabela.setGasto(sistema.filtrarCategoria(Categoria.valueOf(categoria.toUpperCase())));
+				total.setText("Total: " + sistema.getTotal(sistema.filtrarCategoria(Categoria.valueOf(categoria.toUpperCase()))));
 				tabela.atualiza();
 				filtro.setText("");
 				
@@ -156,12 +161,13 @@ public class Window extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				tabela.setGasto(sistema.getGastos());
 				tabela.atualiza();
+				total.setText("Total: " + sistema.getTotal(sistema.getGastos()));
 				
 			}
 		});
 		
-		
-		
+		total.setBounds(450 ,410 , 100, 15);
+		panel.add(total);
 		
 		
 		
