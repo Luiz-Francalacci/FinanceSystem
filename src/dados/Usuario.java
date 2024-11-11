@@ -1,6 +1,7 @@
 package dados;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +46,8 @@ public class Usuario {
 					x.setValor(Float.parseFloat(resposta));
 				}
 				if(opcao.toLowerCase().equals("data")) {
-					x.setData(LocalDate.parse(resposta));
+					DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+					x.setData(LocalDate.parse(resposta, formato));
 				}
 				if(opcao.toLowerCase().equals("categoria")) {
 					x.setCategoria(Categoria.valueOf(resposta.toUpperCase()));

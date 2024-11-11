@@ -1,14 +1,17 @@
 package apresentacao;
 
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -50,6 +53,8 @@ public class Window extends JFrame{
 	private JLabel infoFiltro = new JLabel("Filtros:");
 	private JButton limpar = new JButton("Limpar Filtros");
 	private JLabel total = new JLabel("Total: 0");
+	private JButton mudarDados = new JButton("Mudar Dados");
+	private JButton removerGasto = new JButton("Remover Gasto");
 	
 	
 	public Window() {
@@ -169,6 +174,31 @@ public class Window extends JFrame{
 		total.setBounds(450 ,410 , 100, 15);
 		panel.add(total);
 		
+		mudarDados.setBounds(445,430,200,40);
+		panel.add(mudarDados);
+		
+		mudarDados.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				atualizaDados(sistema);
+				
+				tabela.atualiza();
+				
+				
+			}
+		});
+		removerGasto.setBounds(445,500,200,40);
+		panel.add(removerGasto);
+		removerGasto.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				removeGasto(sistema);
+				tabela.atualiza();
+				
+			}
+		});
 		
 		
 		
@@ -177,10 +207,192 @@ public class Window extends JFrame{
 		
 	}
 	
+	private void loginDialog(SistemaFinancas sistemaF) {
+		JDialog login = new JDialog(this,"Login",true);
+		login.setSize(300,150);
+		login.setLayout(new GridLayout(3,2));
+		login.setLocationRelativeTo(this);
+		JLabel userText = new JLabel("Usuario");
+		JTextField userField = new JTextField();
+		JLabel senhaText = new JLabel("Senha");
+		JTextField senhaField = new JTextField();
+		JButton loginButton = new JButton("Entrar");
+		JButton cadastroButton = new JButton("Cadastrar");
+		
+		loginButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if(sistemaF.logarUsuario(userField.getText(), senhaField.getText())) {
+					JOptionPane.showMessageDialog(login, "Login Aprovado");
+					login.dispose();
+				}else {
+					JOptionPane.showMessageDialog(login, "Usuario ou Senha Errados");
+				}
+				
+				
+			
+			}
+		});
+		
+		cadastroButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				login.dispose();
+				cadastroDialog(sistemaF);
+				
+			}
+		});
+		
+		login.add(userText);
+		login.add(userField);
+		login.add(senhaText);
+		login.add(senhaField);
+		login.add(loginButton);
+		login.add(cadastroButton);
+		login.setVisible(true);
+		
+	}
+	
+	private void cadastroDialog(SistemaFinancas sistemaF) {
+		JDialog login = new JDialog(this,"Cadastro",true);
+		login.setSize(300,150);
+		login.setLayout(new GridLayout(3,2));
+		login.setLocationRelativeTo(this);
+		JLabel userText = new JLabel("Usuario");
+		JTextField userField = new JTextField();
+		JLabel senhaText = new JLabel("Senha");
+		JTextField senhaField = new JTextField();
+		JButton loginButton = new JButton("Cadastrar");
+		
+		loginButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				sistemaF.cadastrarUsuario(new Usuario(userText.getText(),senhaText.getText()));
+				JOptionPane.showMessageDialog(login, "Cadastrado com Sucesso");
+				login.dispose();
+				loginDialog(sistemaF);
+				
+			
+			}
+		});
+		login.add(userText);
+		login.add(userField);
+		login.add(senhaText);
+		login.add(senhaField);
+		login.add(loginButton);
+		login.setVisible(true);
+		
+	}
+	
+	private void atualizaDados(SistemaFinancas sistemaF) {
+		JDialog tela = new JDialog(this,"Atualizar", true);
+		tela.setSize(800,400);
+		tela.setLayout(new GridLayout(7,3));
+		tela.setLocationRelativeTo(this);
+		JLabel nomeTxt = new JLabel("Nome: ");
+		JLabel valorTxt = new JLabel("Valor: ");
+		JLabel dataTxt = new JLabel("Data: ");
+		JLabel categoriaTxt = new JLabel("Categoria: ");
+		JLabel descricaoTxt = new JLabel("Descricao: ");
+		JTextField nomeField = new JTextField();
+		JTextField valorField = new JTextField();
+		JTextField dataField = new JTextField();
+		JTextField categoriaField = new JTextField();
+		JTextField descricaoField = new JTextField();
+		JLabel gasto = new JLabel("Digite o nome do Gasto a Alterar");
+		JTextField gastoField= new JTextField();
+		JButton atualiza = new JButton("Atualiza");
+		
+		
+		atualiza.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if(!nomeField.getText().isEmpty()) {
+					sistemaF.alterarGasto(gastoField.getText(), "nome",nomeField.getText());
+				}
+				
+				if(!valorField.getText().isEmpty()) {
+					sistemaF.alterarGasto(gastoField.getText(), "valor",valorField.getText());
+				}
+				
+				if(!dataField.getText().isEmpty()) {
+					sistemaF.alterarGasto(gastoField.getText(), "data",dataField.getText());
+				}
+				
+				if(!categoriaField.getText().isEmpty()) {
+					sistemaF.alterarGasto(gastoField.getText(), "categoria",categoriaField.getText());
+				}
+				
+				if(!descricaoField.getText().isEmpty()) {
+					sistemaF.alterarGasto(gastoField.getText(), "descricao",descricaoField.getText());
+				}
+				
+				
+				tela.dispose();
+			}
+		});
+		
+		tela.add(gasto);
+		tela.add(gastoField);
+		tela.add(nomeTxt);
+		tela.add(nomeField);
+		tela.add(valorTxt);
+		tela.add(valorField);
+		tela.add(dataTxt);
+		tela.add(dataField);
+		tela.add(categoriaTxt);
+		tela.add(categoriaField);
+		tela.add(descricaoTxt);
+		tela.add(descricaoField);
+		tela.add(atualiza);
+		tela.setVisible(true);
+		
+		
+		
+	}
+	
+	private void removeGasto(SistemaFinancas sistemaF) {
+		JDialog tela = new JDialog(this,"Remover", true);
+		tela.setSize(300,150);
+		tela.setLayout(new GridLayout(3,2));
+		tela.setLocationRelativeTo(this);
+		JLabel nomeLabel = new JLabel("Digite o nome do Gasto a Remover");
+		JTextField nomeField = new JTextField();
+		JButton remover = new JButton("Remover");
+		remover.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sistemaF.removerGasto(nomeField.getText());
+				tela.dispose();
+				
+			}
+		});
+		tela.add(nomeLabel);
+		tela.add(nomeField);
+		tela.add(remover);
+		tela.setVisible(true);
+		
+		
+	}
+	
+	
+	
+	
+	
+	
 	public static void main(String[] args) {
 		Window s = new Window();
 		s.getSistema().cadastrarUsuario(new Usuario("1234", "1234"));
 		s.getSistema().logarUsuario("1234", "1234");
+		
 		
 		s.setVisible(true);
 	}

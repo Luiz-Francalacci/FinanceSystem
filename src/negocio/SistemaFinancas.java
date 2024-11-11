@@ -18,13 +18,18 @@ public class SistemaFinancas {
 		this.usuarios.add(user);
 	}
 	
-	public void logarUsuario(String login, String senha) {
+	public boolean logarUsuario(String login, String senha) {
 		for(int i = 0; i < this.usuarios.size(); i++) {
 			if(this.usuarios.get(i).validarLogin(login, senha)) {
 				this.usuarioOn = i;
+				return true;
 			}
 		}
+		return false;
+		
+		
 	}
+	
 	
 	
 	public void adicionarGasto(Gasto gasto) {
