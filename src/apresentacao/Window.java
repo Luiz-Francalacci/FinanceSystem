@@ -59,6 +59,7 @@ public class Window extends JFrame{
 	private JButton cadastrar = new JButton("Cadastrar");
 	
 	
+	
 	public Window() {
 		
 		setTitle("Sistema de Financas Pessoais");
@@ -203,8 +204,8 @@ public class Window extends JFrame{
 			}
 		});
 		
-		logar.setBounds(500, 500,200,40);
-		panel.add(logar);
+		logar.setBounds(280, 10,100,40);
+		painelAddGasto.add(logar);
 		logar.addActionListener(new ActionListener() {
 			
 			@Override
@@ -214,6 +215,7 @@ public class Window extends JFrame{
 				
 			}
 		});
+		
 		
 		
 		
