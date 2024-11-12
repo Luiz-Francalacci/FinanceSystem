@@ -9,7 +9,8 @@ public class Usuario {
 
 	private String login;
 	private String senha;
-	List<Gasto> gastos = new ArrayList<>();
+	List<Gasto> gastos = new java.util.ArrayList<>();
+	
 	
 	
 	public Usuario(String login, String senha) {
@@ -37,23 +38,28 @@ public class Usuario {
 	}
 	
 	public void alterarGasto(String nome, String opcao, String resposta) {
-		for(Gasto x : gastos) {
+		for(Gasto x : this.gastos) {
 			if(x.getNome().equals(nome)) {
 				if(opcao.toLowerCase().equals("nome")) {
 					x.setNome(resposta);
+					break;
 				}
 				if(opcao.toLowerCase().equals("valor")) {
 					x.setValor(Float.parseFloat(resposta));
+					break;
 				}
 				if(opcao.toLowerCase().equals("data")) {
 					DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 					x.setData(LocalDate.parse(resposta, formato));
+					break;
 				}
 				if(opcao.toLowerCase().equals("categoria")) {
 					x.setCategoria(Categoria.valueOf(resposta.toUpperCase()));
+					break;
 				}
 				if(opcao.toLowerCase().equals("descricao")) {
 					x.setDescricao(resposta);
+					break;
 				}
 			}
 		}

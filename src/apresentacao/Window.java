@@ -55,6 +55,8 @@ public class Window extends JFrame{
 	private JLabel total = new JLabel("Total: 0");
 	private JButton mudarDados = new JButton("Mudar Dados");
 	private JButton removerGasto = new JButton("Remover Gasto");
+	private JButton logar = new JButton("Logar");
+	private JButton cadastrar = new JButton("Cadastrar");
 	
 	
 	public Window() {
@@ -181,7 +183,7 @@ public class Window extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				atualizaDados(sistema);
+				atualizaDados();
 				
 				tabela.atualiza();
 				
@@ -194,8 +196,21 @@ public class Window extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				removeGasto(sistema);
+				removeGasto();
+				total.setText("Total: " + sistema.getTotal(sistema.getGastos()));
 				tabela.atualiza();
+				
+			}
+		});
+		
+		logar.setBounds(500, 500,200,40);
+		panel.add(logar);
+		logar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				loginDialog();
 				
 			}
 		});
@@ -203,11 +218,9 @@ public class Window extends JFrame{
 		
 		
 		
-		
-		
 	}
 	
-	private void loginDialog(SistemaFinancas sistemaF) {
+	private void loginDialog() {
 		JDialog login = new JDialog(this,"Login",true);
 		login.setSize(300,150);
 		login.setLayout(new GridLayout(3,2));
@@ -224,9 +237,11 @@ public class Window extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				if(sistemaF.logarUsuario(userField.getText(), senhaField.getText())) {
+				if(sistema.logarUsuario(userField.getText(), senhaField.getText())) {
 					JOptionPane.showMessageDialog(login, "Login Aprovado");
 					login.dispose();
+					tabela.setGasto(sistema.getGastos());
+					tabela.atualiza();
 				}else {
 					JOptionPane.showMessageDialog(login, "Usuario ou Senha Errados");
 				}
@@ -241,7 +256,7 @@ public class Window extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				login.dispose();
-				cadastroDialog(sistemaF);
+				cadastroDialog();
 				
 			}
 		});
@@ -256,7 +271,7 @@ public class Window extends JFrame{
 		
 	}
 	
-	private void cadastroDialog(SistemaFinancas sistemaF) {
+	private void cadastroDialog() {
 		JDialog login = new JDialog(this,"Cadastro",true);
 		login.setSize(300,150);
 		login.setLayout(new GridLayout(3,2));
@@ -265,17 +280,16 @@ public class Window extends JFrame{
 		JTextField userField = new JTextField();
 		JLabel senhaText = new JLabel("Senha");
 		JTextField senhaField = new JTextField();
-		JButton loginButton = new JButton("Cadastrar");
+		JButton cadasButton = new JButton("Cadastrar");
 		
-		loginButton.addActionListener(new ActionListener() {
+		cadasButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				sistemaF.cadastrarUsuario(new Usuario(userText.getText(),senhaText.getText()));
+				sistema.cadastrarUsuario(new Usuario(userField.getText(),senhaField.getText()));
 				JOptionPane.showMessageDialog(login, "Cadastrado com Sucesso");
 				login.dispose();
-				loginDialog(sistemaF);
+				
 				
 			
 			}
@@ -284,12 +298,12 @@ public class Window extends JFrame{
 		login.add(userField);
 		login.add(senhaText);
 		login.add(senhaField);
-		login.add(loginButton);
+		login.add(cadasButton);
 		login.setVisible(true);
 		
 	}
 	
-	private void atualizaDados(SistemaFinancas sistemaF) {
+	private void atualizaDados() {
 		JDialog tela = new JDialog(this,"Atualizar", true);
 		tela.setSize(800,400);
 		tela.setLayout(new GridLayout(7,3));
@@ -307,34 +321,37 @@ public class Window extends JFrame{
 		JLabel gasto = new JLabel("Digite o nome do Gasto a Alterar");
 		JTextField gastoField= new JTextField();
 		JButton atualiza = new JButton("Atualiza");
+
 		
 		
 		atualiza.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				if(!nomeField.getText().isEmpty()) {
-					sistemaF.alterarGasto(gastoField.getText(), "nome",nomeField.getText());
-				}
+				String nomeGasto = gastoField.getText();
 				
 				if(!valorField.getText().isEmpty()) {
-					sistemaF.alterarGasto(gastoField.getText(), "valor",valorField.getText());
+					sistema.alterarGasto(nomeGasto, "valor",valorField.getText());
 				}
 				
 				if(!dataField.getText().isEmpty()) {
-					sistemaF.alterarGasto(gastoField.getText(), "data",dataField.getText());
+					sistema.alterarGasto(nomeGasto, "data",dataField.getText());
 				}
 				
 				if(!categoriaField.getText().isEmpty()) {
-					sistemaF.alterarGasto(gastoField.getText(), "categoria",categoriaField.getText());
+					sistema.alterarGasto(nomeGasto, "categoria",categoriaField.getText());
 				}
 				
 				if(!descricaoField.getText().isEmpty()) {
-					sistemaF.alterarGasto(gastoField.getText(), "descricao",descricaoField.getText());
+					sistema.alterarGasto(nomeGasto, "descricao",descricaoField.getText());
 				}
 				
+				if(!nomeField.getText().isEmpty()) {
+					sistema.alterarGasto(nomeGasto, "nome",nomeField.getText());
+				}
 				
+				total.setText("Total: " + sistema.getTotal(sistema.getGastos()));
+				tabela.atualiza();
 				tela.dispose();
 			}
 		});
@@ -358,7 +375,7 @@ public class Window extends JFrame{
 		
 	}
 	
-	private void removeGasto(SistemaFinancas sistemaF) {
+	private void removeGasto() {
 		JDialog tela = new JDialog(this,"Remover", true);
 		tela.setSize(300,150);
 		tela.setLayout(new GridLayout(3,2));
@@ -370,8 +387,9 @@ public class Window extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				sistemaF.removerGasto(nomeField.getText());
+				sistema.removerGasto(nomeField.getText());
 				tela.dispose();
+				tabela.atualiza();
 				
 			}
 		});
@@ -382,6 +400,7 @@ public class Window extends JFrame{
 		
 		
 	}
+
 	
 	
 	

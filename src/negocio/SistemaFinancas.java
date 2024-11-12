@@ -32,6 +32,8 @@ public class SistemaFinancas {
 	
 	
 	
+	
+	
 	public void adicionarGasto(Gasto gasto) {
 		this.usuarios.get(usuarioOn).adicionarGasto(gasto);
 	}
