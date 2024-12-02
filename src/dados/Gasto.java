@@ -10,13 +10,25 @@ public class Gasto {
 	private float valor;
 	private String descricao;
 	private Categoria categoria;
+	private int id_usuario;
+	private int id_gasto;
 	
+	public Gasto(int idGasto, String nome, LocalDate data, String descricao, float valor, Categoria categoria, int idUsuario) {
+		setCategoria(categoria);
+		setData(data);
+		setDescricao(descricao);
+		setNome(nome);
+		setValor(valor);
+		this.id_gasto = idGasto;
+		this.id_usuario = idUsuario;
+	}
 	public Gasto(String nome, LocalDate data, String descricao, float valor, Categoria categoria) {
 		setCategoria(categoria);
 		setData(data);
 		setDescricao(descricao);
 		setNome(nome);
 		setValor(valor);
+		
 	}
 	
 	public LocalDate getData() {
@@ -57,6 +69,15 @@ public class Gasto {
 							this.valor, this.categoria);
 	}
 	
+	public int getIdUsuario() {
+		return this.id_usuario;
+	}
+	public int getIdGasto() {
+		return this.id_gasto;
+	}
+	public void setIdUsuario(int id) {
+		this.id_usuario = id;
+	}
 	
 	
 	

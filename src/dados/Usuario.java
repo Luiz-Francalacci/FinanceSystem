@@ -7,15 +7,22 @@ import java.util.List;
 
 public class Usuario {
 
+	private int id;
 	private String login;
 	private String senha;
 	List<Gasto> gastos = new java.util.ArrayList<>();
 	
 	
 	
+	public Usuario(int id, String login, String senha) {
+		this.senha = senha;
+		this.login = login;
+		this.id = id;
+	}
 	public Usuario(String login, String senha) {
 		this.senha = senha;
 		this.login = login;
+		
 	}
 	
 	public boolean validarLogin(String login, String senha) {
@@ -67,10 +74,27 @@ public class Usuario {
 	
 	
 	
+	
+	public String getLogin() {
+		return login;
+	}
+
+
+	public String getSenha() {
+		return senha;
+	}
+
+
 	public List<Gasto> getGastos(){
 		return gastos;
 	}
 	
+	public int getId() {
+		return this.id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	
 	

@@ -411,8 +411,7 @@ public class Window extends JFrame{
 	
 	public static void main(String[] args) {
 		Window s = new Window();
-		s.getSistema().cadastrarUsuario(new Usuario("1234", "1234"));
-		s.getSistema().logarUsuario("1234", "1234");
+		
 		
 		
 		s.setVisible(true);
